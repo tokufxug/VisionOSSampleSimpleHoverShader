@@ -17,7 +17,18 @@ struct ContentView: View {
         VStack {
             RealityView { content in
                 // Add the initial RealityKit content
-                if let scene = try? await Entity(named: "Scene", in: realityKitContentBundle) {
+                if let scene = try? await Entity(named: "HoverShaderScene", in: realityKitContentBundle) {
+                    
+                    if let leftEye = scene.findEntity(named: "Left_Eye") {
+                        let hoverEffect = HoverEffectComponent(.shader(.default))
+                        leftEye.components.set(hoverEffect)
+                    }
+                    
+                    if let righttEye = scene.findEntity(named: "Right_Eye") {
+                        let hoverEffect = HoverEffectComponent(.shader(.default))
+                        righttEye.components.set(hoverEffect)
+                    }
+                    
                     content.add(scene)
                 }
             } update: { content in
